@@ -4,10 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Elegant Portfolio</title>
-  <link rel="stylesheet" href="styles.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-</head>
-<style>@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
     :root {
       --primary-color: #6c5ce7;
@@ -193,8 +192,8 @@
         font-size: 1.5rem;
       }
     }
-    
-    </style>
+  </style>
+</head>
 <body>
   <div class="container">
     <header>
@@ -205,32 +204,32 @@
       <section class="brochure">
         <h2>Download My Brochure</h2>
         <p>Get a comprehensive overview of my work and skills.</p>
-        <button onclick="downloadBrochure()" class="download-btn">
+        <button id="downloadBtn" class="download-btn">
           <i class="fas fa-download"></i> Download Brochure
         </button>
       </section>
       <section class="portfolio">
         <h2>Portfolio Highlights</h2>
         <div class="portfolio-grid">
-          <div class="portfolio-item" onclick="openWebsite('https://example.com/project1')">
+          <div class="portfolio-item" data-url="https://mealthspace.com/">
             <img src="2_20241204_230345_0001.png" alt="Project 1" class="portfolio-image">
             <div class="overlay">
               <div class="text">Project 1</div>
             </div>
           </div>
-          <div class="portfolio-item" onclick="openWebsite('https://example.com/project2')">
+          <div class="portfolio-item" data-url="https://connexgrow.github.io/bhandra/">
             <img src="3_20241204_230345_0002.png" alt="Project 2" class="portfolio-image">
             <div class="overlay">
               <div class="text">Project 2</div>
             </div>
           </div>
-          <div class="portfolio-item" onclick="openWebsite('https://example.com/project3')">
+          <div class="portfolio-item" data-url="https://www.tezzambulance.in/">
             <img src="4_20241204_230345_0003.png" alt="Project 3" class="portfolio-image">
             <div class="overlay">
               <div class="text">Project 3</div>
             </div>
           </div>
-          <div class="portfolio-item" onclick="openWebsite('https://example.com/project4')">
+          <div class="portfolio-item" data-url="https://www.alphaxaviations.com/">
             <img src="5_20241204_230345_0004.png" alt="Project 4" class="portfolio-image">
             <div class="overlay">
               <div class="text">Project 4</div>
@@ -248,54 +247,48 @@
       </div>
     </footer>
   </div>
-  <script>function downloadBrochure() {
-    // Replace with the actual URL of your brochure file
-    const brochureUrl = "https://yourserver.com/brochure.pdf";
-  
-    const downloadLink = document.createElement("a");
-    downloadLink.href = brochureUrl;
-    downloadLink.download = "Brochure.pdf";
-    downloadLink.click();
-  
-    // Add a visual feedback for the download
-    const downloadBtn = document.querySelector('.download-btn');
-    downloadBtn.textContent = 'Downloading...';
-    setTimeout(() => {
-      downloadBtn.innerHTML = '<i class="fas fa-check"></i> Downloaded';
+  <script>
+    function downloadBrochure() {
+      // Replace with the actual URL of your brochure file
+      const brochureUrl = "https://yourserver.com/brochure.pdf";
+    
+      const downloadLink = document.createElement("a");
+      downloadLink.href = brochureUrl;
+      downloadLink.download = "Brochure.pdf";
+      downloadLink.click();
+    
+      // Add a visual feedback for the download
+      const downloadBtn = document.querySelector('.download-btn');
+      downloadBtn.textContent = 'Downloading...';
       setTimeout(() => {
-        downloadBtn.innerHTML = '<i class="fas fa-download"></i> Download Brochure';
-      }, 3000);
-    }, 1500);
-  }
-  
-  function openWebsite(url) {
-    window.open(url, '_blank');
-  }
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    // Smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
+        downloadBtn.innerHTML = '<i class="fas fa-check"></i> Downloaded';
+        setTimeout(() => {
+          downloadBtn.innerHTML = '<i class="fas fa-download"></i> Download Brochure';
+        }, 3000);
+      }, 1500);
+    }
+    
+    function openWebsite(url) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add click event listener to download button
+      const downloadBtn = document.getElementById('downloadBtn');
+      downloadBtn.addEventListener('click', downloadBrochure);
+
+      // Add click event listeners to portfolio items
+      const portfolioItems = document.querySelectorAll('.portfolio-item');
+      portfolioItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          const url = item.getAttribute('data-url');
+          if (url) {
+            openWebsite(url);
+          }
         });
       });
     });
-  
-    // Add hover effect to portfolio items
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
-    portfolioItems.forEach(item => {
-      item.addEventListener('mouseenter', () => {
-        item.style.transform = 'scale(1.05)';
-      });
-      item.addEventListener('mouseleave', () => {
-        item.style.transform = 'scale(1)';
-      });
-    });
-  });
-  
   </script>
 </body>
 </html>
-
